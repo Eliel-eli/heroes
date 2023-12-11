@@ -1,0 +1,79 @@
+<!-- heroes.component.html -->
+<div>
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Nombre del Héroe"
+        [(ngModel)]="selectedHero.name"
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addHero()">
+      Añadir Héroe
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="editHero(selectedHero)"
+      [disabled]="!selectedHero.id"
+    >
+      Editar
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="
+        deleteHero(selectedHero?.id !== undefined ? selectedHero?.id : null)
+      "
+      [disabled]="!selectedHero || selectedHero.id === null"
+    >
+      Borrar
+    </button>
+  </div>
+
+  <!-- Input para filtrar por el héroe seleccionado -->
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Filtrar por héroe"
+      [(ngModel)]="filterKeyword"
+      (input)="updateFilteredHeroes()"
+    />
+  </mat-form-field>
+
+  <!-- Formulario para añadir un nuevo héroe -->
+  <form #heroForm="ngForm" (ngSubmit)="saveHero()">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Nombre del Héroe"
+        name="newHeroName"
+        [(ngModel)]="newHero.name"
+        required
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">
+      Guardar Nuevo Héroe
+    </button>
+  </form>
+
+  <!-- Lista de héroes -->
+  <div *ngIf="dataSource.data.length > 0">
+    <mat-table [dataSource]="dataSource" matSort>
+      <!-- Columnas ... -->
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <!-- Mostrar cuando la lista de héroes está vacía -->
+  <div *ngIf="dataSource.data.length === 0">
+    <p>No hay héroes disponibles.</p>
+  </div>
+</div>

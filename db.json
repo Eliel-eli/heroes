@@ -1,0 +1,7 @@
+{
+  "heroes": [
+    { "id": 1, "name": "Superman" },
+    { "id": 2, "name": "Batman" },
+    { "id": 3, "name": "Spiderman" }
+  ]
+}
